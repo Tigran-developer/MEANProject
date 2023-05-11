@@ -11,7 +11,6 @@ const session = require('express-session')
 const customer = require('./routes/customer.service');
 const membership = require('./routes/membership.service');
 
-const account = require('./routes/account.service');
 
 const app = express();
 const port = 3000;
@@ -45,7 +44,6 @@ app.use('/customers', customer)
 
 app.use('/membership', membership);
 
-app.use('/account', account);
 
 
 
