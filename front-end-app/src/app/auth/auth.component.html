@@ -1,0 +1,7 @@
+<h1>Authorisation form</h1>
+<form (submit)="userLogin()">
+  <input type="text" [(ngModel)]="login" name="login" placeholder="Enter login" class="form-control">
+  <input type="password" [(ngModel)]="password" name="password" placeholder="Enter password" class="form-control">
+  <br>
+  <button class="btn btn-success" type="submit">Login</button>
+</form>
