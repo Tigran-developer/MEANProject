@@ -36,7 +36,7 @@ router.post('/',async (req, response)=>{
     }
 });
 
-router.patch('/', (req, response)=>{
+router.patch('/',async (req, response)=>{
     let newUser = new User({
         _id: req.body._id,
         name: req.body.name,
@@ -46,9 +46,8 @@ router.patch('/', (req, response)=>{
         password:8
     })
     try {
-        let isUpdated=false;
-        User.updateUser(newUser).then(r => isUpdated=r.modifiedCount === 1);
-        response.send(isUpdated? newUser:'There is not any matches for update');
+        const result = await User.updateUser(newUser);
+        response.send(newUser);
     } catch (err) {
         response.json({ success: false, msg: 'User did not updated' });
     }

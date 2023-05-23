@@ -40,7 +40,7 @@ export class CustomerEditComponent implements OnChanges {
         select(fromCustomer.getCustomerById(changes['editCustomerId'].currentValue)),
       )
         .pipe(takeUntil(this.ngUnsubscribe))
-        .subscribe((customer: { _id: any; name: any; phone: any; address: any; membership: any; }) => {
+        .subscribe((customer) => {
           this.customerForm.controls['id'].setValue(customer?._id);
           this.customerForm.controls['name'].setValue(customer?.name);
           this.customerForm.controls['phone'].setValue(customer?.phone);
@@ -78,9 +78,8 @@ export class CustomerEditComponent implements OnChanges {
 
   loadMemberships() {
     this.memberships$ = this.store.pipe(select(fromMemberships.getMemberships),
-      tap((memberships: MembershipModel) => {
+      tap((memberships: MembershipModel[]) => {
         if (!memberships) {
-          // @ts-ignore
           this.store.dispatch(new membershipActions.LoadMemberships);
         }
       }))
