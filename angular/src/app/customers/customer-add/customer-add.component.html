@@ -1,0 +1,32 @@
+<h3>Add Customer</h3>
+  <form [formGroup]="customerForm" (submit)="createCustomer()" class="form-inline mb-4">
+
+    <label class="sr-only" for="name">Name</label>
+    <div class="input-group mb-2 mr-sm-2">
+      <input type="text" class="form-control" formControlName="name" placeholder="name">
+    </div>
+
+    <label class="sr-only" for="phone">Phone</label>
+    <div class="input-group mb-2 mr-sm-2">
+      <input type="text" class="form-control" formControlName="phone" placeholder="Phone">
+    </div>
+
+    <label class="sr-only" for="address">Address</label>
+    <div class="input-group mb-2 mr-sm-2">
+      <input type="text" class="form-control" formControlName="address" placeholder="Address">
+    </div>
+
+    <label class="sr-only" for="membership">Membership</label>
+    <div class="input-group mb-2 mr-sm-2">
+      <select formControlName="membership" class="form-control">
+        <option value="" hidden selected>Select Membership</option>
+        <option [ngValue]="null" hidden selected>Select Membership</option>
+        <option *ngFor="let membership of memberships$ | async; let i = index;"
+                [value]="membership._id"
+        >{{membership.name}}</option>
+      </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary mb-2">Add Customer</button>
+  </form>
+

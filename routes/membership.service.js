@@ -1,7 +1,7 @@
 const express = require('express');
 const passport = require('passport');
 const router = express.Router();
-const Membership = require('../angular-app/membership');
+const Membership = require('../angular/membership');
 
 router.get('/', async (req, res) => {
     try {
