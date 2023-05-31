@@ -46,7 +46,7 @@ router.patch('/',async (req, response)=>{
         password:8
     })
     try {
-        const result = await User.updateUser(newUser);
+        await User.updateUser(newUser);
         response.send(newUser);
     } catch (err) {
         response.json({ success: false, msg: 'User did not updated' });

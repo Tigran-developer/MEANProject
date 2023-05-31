@@ -9,6 +9,8 @@ import * as custerActions from "../state/customer.action";
 import * as membershipActions from "../../membership/state/membership.action";
 import * as fromCustomer from "../state/customer.reducer";
 import * as fromMembership from "../../membership/state/membership.reducer"
+import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
+import {CustomerEditComponent} from "../customer-edit/customer-edit.component";
 
 @Component({
   selector: 'app-customer-list',
@@ -19,10 +21,13 @@ export class CustomerListComponent implements OnInit {
   customers$: Observable<CustomerModel[]> | any;
   customer: Signal<CustomerModel[]> | any;
   error$: Observable<String> | undefined;
+  dialogConfig = new MatDialogConfig();
+
 
   @Output() selectedCustomer = new EventEmitter();
 
-  constructor(private store: Store<fromCustomer.AppState>) {
+  constructor(private store: Store<fromCustomer.AppState>,
+              private dialog: MatDialog) {
     effect(() => {
       console.log("this.customer- " + this.customer);
     })
@@ -30,6 +35,10 @@ export class CustomerListComponent implements OnInit {
 
   ngOnInit() {
     this.getCustomersList();
+    this.dialogConfig.disableClose = true;
+    this.dialogConfig.autoFocus = true;
+    this.dialogConfig.position={ top: '100px',
+      left: '200px'}
   }
 
   getCustomersList() {
@@ -61,6 +70,9 @@ export class CustomerListComponent implements OnInit {
           this.store.dispatch(new membershipActions.LoadMembership(membershipId));
         }
       }))
+  }
+  onEdit(customerId: string) {
+    this.dialog.open(CustomerEditComponent)
   }
 
   deleteCustomer(customer: CustomerModel) {

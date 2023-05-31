@@ -1,22 +1,22 @@
 <h3>Update Customer</h3>
   <form [formGroup]="customerForm"  (submit)="updateCustomer()" class="form-inline mb-4">
 
-    <label class="sr-only" for="Name">Name</label>
+    <label class="sr-only">Name</label>
     <div class="input-group mb-2 mr-sm-2">
       <input type="text" class="form-control" formControlName="name" placeholder="name">
     </div>
 
-    <label class="sr-only" for="Phone">Phone</label>
+    <label class="sr-only">Phone</label>
     <div class="input-group mb-2 mr-sm-2">
       <input type="text" class="form-control" formControlName="phone" placeholder="Phone">
     </div>
 
-    <label class="sr-only" for="Address">Address</label>
+    <label class="sr-only">Address</label>
     <div class="input-group mb-2 mr-sm-2">
       <input type="text" class="form-control" formControlName="address"  placeholder="Address">
     </div>
 
-    <label class="sr-only" for="MembershipName">Membership</label>
+    <label class="sr-only">Membership</label>
     <div class="input-group mb-2 mr-sm-2">
       <select class="form-control" formControlName="membershipId">
         <option value="" hidden selected>Select Membership</option>

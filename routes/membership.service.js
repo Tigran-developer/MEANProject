@@ -31,11 +31,10 @@ router.post('/',(req, res)=>{
     })
     User.addUser(newUser)
         .then(() => {
-            alert("User successfully was added")
-            res.json({ success: true, msg: 'User was added' });
+            res.json({ success: true, msg: 'Membership was added' });
         })
         .catch((err) => {
-            res.json({ success: false, msg: 'User did not added' });
+            res.json({ success: false, msg: 'Membership did not added' });
         });
 });
 router.patch('/',(req, res)=>{
@@ -48,7 +47,6 @@ router.patch('/',(req, res)=>{
     })
     User.addUser(newUser)
         .then(() => {
-            alert("User successfully was added")
             res.json({ success: true, msg: 'User was added' });
         })
         .catch((err) => {

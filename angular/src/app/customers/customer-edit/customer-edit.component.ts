@@ -1,7 +1,8 @@
 import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {select, Store} from '@ngrx/store';
-import {Observable, of, Subject, takeUntil,tap} from 'rxjs';
+import {Observable, of, Subject, tap, take} from 'rxjs';
+import {MatDialog} from "@angular/material/dialog";
 
 import {CustomerModel} from '../customer.model';
 import {MembershipModel} from "../../membership/membership.model";
@@ -39,7 +40,7 @@ export class CustomerEditComponent implements OnChanges {
      this.store.pipe(
         select(fromCustomer.getCustomerById(changes['editCustomerId'].currentValue)),
       )
-        .pipe(takeUntil(this.ngUnsubscribe))
+        .pipe(take(1))
         .subscribe((customer) => {
           this.customerForm.controls['id'].setValue(customer?._id);
           this.customerForm.controls['name'].setValue(customer?.name);
@@ -47,6 +48,7 @@ export class CustomerEditComponent implements OnChanges {
           this.customerForm.controls['address'].setValue(customer?.address);
           this.customerForm.controls['membershipId'].setValue(customer?.membership);
         });
+
       this.loadMemberships();
     }
   }
@@ -59,7 +61,6 @@ export class CustomerEditComponent implements OnChanges {
       address: this.customerForm?.get('address')?.value,
       membership: this.customerForm?.get('membershipId')?.value,
     }
-    // @ts-ignore
     this.store.dispatch(new customerActions.UpdateCustomer(updatedCustomer));
     this.customerForm.reset();
   }

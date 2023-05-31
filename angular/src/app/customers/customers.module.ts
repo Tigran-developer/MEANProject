@@ -11,6 +11,8 @@ import {StoreModule} from "@ngrx/store";
 import {customerReducer} from "./state/customer.reducer"
 import {ReactiveFormsModule} from '@angular/forms';
 import {MembershipModule} from "../membership/membership.module";
+import {MatDialogModule} from "@angular/material/dialog";
+
 
 const customerRoutes: Routes = [
     {path: "", component: CustomerComponent},
@@ -30,7 +32,8 @@ const customerRoutes: Routes = [
     StoreModule.forFeature("customers", customerReducer),
     EffectsModule.forFeature([CustomerEffect]),
     ReactiveFormsModule,
-    MembershipModule
+    MembershipModule,
+    MatDialogModule
   ],
   providers:[
   ]
