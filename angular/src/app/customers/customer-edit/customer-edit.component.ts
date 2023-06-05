@@ -1,8 +1,7 @@
-import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
+import {Component, Inject, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {select, Store} from '@ngrx/store';
-import {Observable, of, Subject, tap, take} from 'rxjs';
-import {MatDialog} from "@angular/material/dialog";
+import {Observable, of, Subject, take, tap} from 'rxjs';
 
 import {CustomerModel} from '../customer.model';
 import {MembershipModel} from "../../membership/membership.model";
@@ -11,21 +10,28 @@ import * as customerActions from '../state/customer.action';
 import * as membershipActions from "../../membership/state/membership.action";
 import * as fromCustomer from '../state/customer.reducer';
 import * as fromMemberships from '../../membership/state/membership.reducer';
+import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
+import {CustomerListComponent} from "../customer-list/customer-list.component";
 
 @Component({
   selector: 'app-customer-edit',
   templateUrl: './customer-edit.component.html',
   styleUrls: ['./customer-edit.component.scss'],
 })
-export class CustomerEditComponent implements OnChanges {
+export class CustomerEditComponent implements OnInit, OnChanges {
   customerForm!: FormGroup;
   memberships$: Observable<MembershipModel[]> = of();
   ngUnsubscribe = new Subject();
-
-  @Input() editCustomerId!: string;
+  editCustomerId!: string;
 
   constructor(private fb: FormBuilder,
-              private store: Store<fromCustomer.AppState>) {
+              private store: Store<fromCustomer.AppState>,
+              private dialogRef: MatDialogRef<CustomerListComponent>,
+              @Inject(MAT_DIALOG_DATA) data: any) {
+    this.editCustomerId = data.customerId;
+  }
+
+  ngOnInit(): void {
     this.customerForm = this.fb.group({
       id: ["", Validators.required],
       name: ["", Validators.required],
@@ -33,22 +39,14 @@ export class CustomerEditComponent implements OnChanges {
       address: ["", Validators.required],
       membershipId: ["", Validators.required],
     })
+    this.loadCustomer(this.editCustomerId);
+    this.loadMemberships();
+
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['editCustomerId'].previousValue !== changes['editCustomerId'].currentValue) {
-     this.store.pipe(
-        select(fromCustomer.getCustomerById(changes['editCustomerId'].currentValue)),
-      )
-        .pipe(take(1))
-        .subscribe((customer) => {
-          this.customerForm.controls['id'].setValue(customer?._id);
-          this.customerForm.controls['name'].setValue(customer?.name);
-          this.customerForm.controls['phone'].setValue(customer?.phone);
-          this.customerForm.controls['address'].setValue(customer?.address);
-          this.customerForm.controls['membershipId'].setValue(customer?.membership);
-        });
-
+      this.loadCustomer(changes['editCustomerId'].currentValue);
       this.loadMemberships();
     }
   }
@@ -65,17 +63,19 @@ export class CustomerEditComponent implements OnChanges {
     this.customerForm.reset();
   }
 
-  // loadMembership(membershipId: string | undefined): Observable<MembershipModel | undefined> {
-  //   if (!membershipId) throw Error;
-  //   return this.store.pipe(
-  //     select(fromMembership.getMembershipById(membershipId)),
-  //     tap(membership => {
-  //       if (!membership) {
-  //         this.store.dispatch(new membershipActions.LoadMembership(membershipId));
-  //       }
-  //     })
-  //   )
-  // }
+  loadCustomer(customerId: string) {
+    this.store.pipe(
+      select(fromCustomer.getCustomerById(customerId)),
+    )
+      .pipe(take(1))
+      .subscribe((customer) => {
+        this.customerForm.controls['id'].setValue(customer?._id);
+        this.customerForm.controls['name'].setValue(customer?.name);
+        this.customerForm.controls['phone'].setValue(customer?.phone);
+        this.customerForm.controls['address'].setValue(customer?.address);
+        this.customerForm.controls['membershipId'].setValue(customer?.membership);
+      });
+  };
 
   loadMemberships() {
     this.memberships$ = this.store.pipe(select(fromMemberships.getMemberships),

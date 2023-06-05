@@ -10,6 +10,15 @@ import {StoreDevtools, StoreDevtoolsModule} from "@ngrx/store-devtools";
 import {HomeComponent} from './home/home.component';
 import {NavbarComponent} from './navbar/navbar.component';
 import {EffectsModule} from "@ngrx/effects";
+import {CustomersModule} from "./customers/customers.module";
+import {MembershipModule} from "./membership/membership.module";
+import {ReactiveFormsModule} from "@angular/forms";
+import {MatDialogModule} from "@angular/material/dialog";
+import {MatButtonModule} from "@angular/material/button";
+import {MatIconModule} from "@angular/material/icon";
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatInputModule} from "@angular/material/input";
+import {MatRippleModule} from "@angular/material/core";
 
 
 @NgModule({
@@ -26,7 +35,17 @@ import {EffectsModule} from "@ngrx/effects";
     StoreModule.forRoot({}),
     StoreDevtoolsModule.instrument(),
     EffectsModule.forRoot([]),
-    HttpClientModule
+    HttpClientModule,
+    CustomersModule,
+    MembershipModule,
+    ReactiveFormsModule,
+    MatDialogModule,
+    MatButtonModule,
+    MatIconModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatRippleModule
   ],
   providers: [],
   bootstrap: [AppComponent]

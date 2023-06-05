@@ -9,9 +9,11 @@ import {CustomerListComponent} from './customer-list/customer-list.component';
 import {RouterModule, Routes} from "@angular/router";
 import {StoreModule} from "@ngrx/store";
 import {customerReducer} from "./state/customer.reducer"
-import {ReactiveFormsModule} from '@angular/forms';
-import {MembershipModule} from "../membership/membership.module";
+import {ReactiveFormsModule} from "@angular/forms";
 import {MatDialogModule} from "@angular/material/dialog";
+import {MatButtonModule} from "@angular/material/button";
+import {MatIconModule} from "@angular/material/icon";
+import {MatFormFieldModule} from "@angular/material/form-field";
 
 
 const customerRoutes: Routes = [
@@ -32,8 +34,10 @@ const customerRoutes: Routes = [
     StoreModule.forFeature("customers", customerReducer),
     EffectsModule.forFeature([CustomerEffect]),
     ReactiveFormsModule,
-    MembershipModule,
-    MatDialogModule
+    MatDialogModule,
+    MatButtonModule,
+    MatIconModule,
+    MatFormFieldModule
   ],
   providers:[
   ]

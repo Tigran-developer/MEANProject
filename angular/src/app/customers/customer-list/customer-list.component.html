@@ -22,9 +22,9 @@
     <td>{{customer.address}}</td>
     <td>{{customer.membershipName}}</td>
     <th>
-      <button (click)="onEdit(customer._id)">edit</button>
+      <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="edit" (click)="onEdit(customer._id)"></mat-icon>
       <br>
-      <button (click)=deleteCustomer(customer)>delete</button>
+      <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="delete" (click)="deleteCustomer(customer._id)"></mat-icon>
     </th>
   </tr>
   </tbody>

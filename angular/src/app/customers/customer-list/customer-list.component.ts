@@ -1,7 +1,9 @@
-import {Component, effect, EventEmitter, OnInit, Output, Signal} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output, Signal} from '@angular/core';
 import {select, Store} from "@ngrx/store";
 import {map, Observable, switchMap, tap, zip} from "rxjs";
+import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
 
+import {CustomerEditComponent} from "../customer-edit/customer-edit.component";
 import {CustomerModel} from "../customer.model";
 import {MembershipModel} from "../../membership/membership.model";
 
@@ -9,8 +11,7 @@ import * as custerActions from "../state/customer.action";
 import * as membershipActions from "../../membership/state/membership.action";
 import * as fromCustomer from "../state/customer.reducer";
 import * as fromMembership from "../../membership/state/membership.reducer"
-import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
-import {CustomerEditComponent} from "../customer-edit/customer-edit.component";
+
 
 @Component({
   selector: 'app-customer-list',
@@ -23,22 +24,14 @@ export class CustomerListComponent implements OnInit {
   error$: Observable<String> | undefined;
   dialogConfig = new MatDialogConfig();
 
-
   @Output() selectedCustomer = new EventEmitter();
 
   constructor(private store: Store<fromCustomer.AppState>,
               private dialog: MatDialog) {
-    effect(() => {
-      console.log("this.customer- " + this.customer);
-    })
   }
 
   ngOnInit() {
     this.getCustomersList();
-    this.dialogConfig.disableClose = true;
-    this.dialogConfig.autoFocus = true;
-    this.dialogConfig.position={ top: '100px',
-      left: '200px'}
   }
 
   getCustomersList() {
@@ -69,15 +62,21 @@ export class CustomerListComponent implements OnInit {
         if (!membership) {
           this.store.dispatch(new membershipActions.LoadMembership(membershipId));
         }
-      }))
-  }
-  onEdit(customerId: string) {
-    this.dialog.open(CustomerEditComponent)
+      })
+    )
   }
 
-  deleteCustomer(customer: CustomerModel) {
+  onEdit(customerId: string) {
+    const dialogRef = this.dialog.open(CustomerEditComponent,{
+      data:{customerId: customerId},
+      height: '350px',
+      width: '400px',
+    });
+  }
+
+  deleteCustomer(customerId: string) {
     if (confirm("Are You Sure You Want To Delete this User?")) {
-      this.store.dispatch(new custerActions.DeleteCustomer(customer._id||'noId'))
+      this.store.dispatch(new custerActions.DeleteCustomer(customerId||'noId'));
     }
   }
 }
