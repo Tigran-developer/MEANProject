@@ -67,11 +67,13 @@ export class CustomerListComponent implements OnInit {
   }
 
   onEdit(customerId: string) {
-    const dialogRef = this.dialog.open(CustomerEditComponent,{
+   this.dialog.open(CustomerEditComponent,{
       data:{customerId: customerId},
       height: '350px',
       width: '400px',
-    });
+     enterAnimationDuration: 1000,
+     exitAnimationDuration:1000
+   });
   }
 
   deleteCustomer(customerId: string) {

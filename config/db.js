@@ -1,6 +1,5 @@
 
 module.exports = {
-    db: 'mongodb://localhost:27017/mySite',
-    // db: 'mongodb+srv://tigransargsyan062:12345@cluster0.0vybrwp.mongodb.net/?retryWrites=true&w=majority',
-    secret:'secret'
+    //db: 'mongodb://localhost:27017/mySite',
+    db: 'mongodb+srv://tsargsyan:6iAGwKPXO2NvMNVW@cluster1.b0hyalg.mongodb.net/mySite?retryWrites=true&w=majority'
 }

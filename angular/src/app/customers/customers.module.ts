@@ -40,7 +40,7 @@ const customerRoutes: Routes = [
     MatFormFieldModule
   ],
   providers:[
-  ]
+  ],
 })
 export class CustomersModule {
 }

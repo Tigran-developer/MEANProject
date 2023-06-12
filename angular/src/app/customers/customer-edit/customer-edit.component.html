@@ -35,35 +35,49 @@
 
 <mat-dialog-content [formGroup]="customerForm">
 
-  <mat-form-field>
-    <input matInput
-           placeholder="Course Description"
-           formControlName="name">
-  </mat-form-field>
-  <mat-form-field>
-    <input matInput
-           placeholder="Course Description"
-           formControlName="phone">
-  </mat-form-field>
-  <mat-form-field>
-    <input matInput
-           placeholder="Course Description"
-           formControlName="address">
-  </mat-form-field>
-  <div class="input-group mb-2 mr-sm-2">
+    <mat-form-field>
+      <mat-label>Name</mat-label>
+      <input matInput placeholder="Ex. Pizza"
+             formControlName="name">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Phone</mat-label>
+      <input matInput placeholder="Phone"
+             formControlName="phone">
+    </mat-form-field>
+
+    <mat-form-field >
+      <mat-label>Address</mat-label>
+      <input matInput placeholder="Address"
+             formControlName="address">
+    </mat-form-field>
+
+<!--  <mat-form-field class="input-group mb-2 mr-sm-2">-->
+<!--    <select class="form-control" formControlName="membershipId">-->
+<!--      <option value="" hidden selected>Select Membership</option>-->
+<!--      <option [ngValue]="null" hidden selected>Select Membership</option>-->
+<!--      <option *ngFor="let membership of memberships$ | async; let i = index;"-->
+<!--              [selected]="membership._id == customerForm.get('membershipId')?.value"-->
+<!--              [value]="membership._id"-->
+<!--      >{{membership.name}}</option>-->
+<!--    </select>-->
+<!--  </mat-form-field>-->
+
+  <mat-form-field class="input-group mb-2 mr-sm-2">
+<!--    <mat-label>Favorite food</mat-label>-->
     <select class="form-control" formControlName="membershipId">
       <option value="" hidden selected>Select Membership</option>
-      <option [ngValue]="null" hidden selected>Select Membership</option>
       <option *ngFor="let membership of memberships$ | async; let i = index;"
               [selected]="membership._id == customerForm.get('membershipId')?.value"
               [value]="membership._id"
       >{{membership.name}}</option>
     </select>
-  </div>
+  </mat-form-field>
 
 </mat-dialog-content>
 
 <mat-dialog-actions>
-  <button class="mat-raised-button">Close</button>
-  <button class="mat-raised-button mat-primary"(click)="updateCustomer()">Save</button>
+  <button class="mat-raised-button" (click)="dialogRef.close()">Close</button>
+  <button class="mat-raised-button mat-primary" (click)="updateCustomer()">Save</button>
 </mat-dialog-actions>

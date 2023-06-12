@@ -26,7 +26,7 @@ export class CustomerEditComponent implements OnInit, OnChanges {
 
   constructor(private fb: FormBuilder,
               private store: Store<fromCustomer.AppState>,
-              private dialogRef: MatDialogRef<CustomerListComponent>,
+              public dialogRef: MatDialogRef<CustomerListComponent>,
               @Inject(MAT_DIALOG_DATA) data: any) {
     this.editCustomerId = data.customerId;
   }
@@ -61,6 +61,7 @@ export class CustomerEditComponent implements OnInit, OnChanges {
     }
     this.store.dispatch(new customerActions.UpdateCustomer(updatedCustomer));
     this.customerForm.reset();
+    this.dialogRef.close();
   }
 
   loadCustomer(customerId: string) {

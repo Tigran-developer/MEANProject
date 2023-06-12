@@ -38,7 +38,7 @@ export class LoadMembershipsFail implements Action {
 export class LoadMembership implements Action {
   readonly type = MembershipAction.LOAD_MEMBERSHIP
 
-  constructor( public payload: string) {
+  constructor(public payload: string) {
   }
 }
 export class LoadMembershipSuccess implements Action {
